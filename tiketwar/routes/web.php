@@ -14,3 +14,16 @@ Route::get('/halo', function () {
 Route::get('/ping', function () {
  return ['status' => 'ok', 'aplikasi' => 'TiketWar'];
 });
+
+// BARU: tiga route di bawah ini
+Route::get('/konser/{id}', function ($id) {
+ return 'Detail konser nomor ' . $id;
+})->whereNumber('id')->name('konser.detail');
+
+Route::get('/tentang', function () {
+ return 'Halaman Tentang TiketWar';
+})->name('tentang');
+
+Route::get('/info', function () {
+ return redirect()->route('tentang');
+});
