@@ -32,6 +32,16 @@ Route::get('/konser', function () use ($daftarKonser) {
  return view('konser', compact('daftarKonser'));
 })->name('konser.index');
 
+Route::get('/konser/kota/{kota}', function ($kota) use ($daftarKonser) {
+
+    $hasil = collect($daftarKonser)->where('kota', ucfirst($kota));
+
+    return view('konser', [
+        'daftarKonser' => $hasil,
+        'judul' => 'Konser di ' . ucfirst($kota)
+    ]);
+
+})->whereAlpha('kota')->name('konser.kota');
 // DIGANTI: route detail konser
 Route::get('/konser/{id}', function ($id) use ($daftarKonser) {
     abort_unless(isset($daftarKonser[$id]), 404);
