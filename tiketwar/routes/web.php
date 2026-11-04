@@ -35,7 +35,7 @@ Route::get('/konser', function () use ($daftarKonser) {
 Route::get('/konser/kota/{kota}', function ($kota) use ($daftarKonser) {
 
     $hasil = collect($daftarKonser)->where('kota', ucfirst($kota));
-    
+
     return view('konser', [
         'daftarKonser' => $hasil,
         'judul' => 'Konser di ' . ucfirst($kota)
@@ -54,3 +54,5 @@ Route::get('/konser/{id}', function ($id) use ($daftarKonser) {
 })->whereNumber('id')->name('konser.detail');
 
 Route::view('/tentang', 'about')->name('tentang');
+
+Route::view('/kontak', 'kontak')->name('kontak');
