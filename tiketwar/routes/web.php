@@ -19,29 +19,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// BARU: dua route di bawah ini
-Route::get('/halo', function () {
- return 'Halo, selamat datang di TiketWar!';
-});
 
-Route::get('/ping', function () {
- return ['status' => 'ok', 'aplikasi' => 'TiketWar'];
-});
+Route::get('/', function () {
+ return view('home');
+})->name('home');
 
-// BARU: tiga route di bawah ini
+Route::get('/konser', function () use ($daftarKonser) {
+ return view('konser', compact('daftarKonser'));
+})->name('konser.index');
+
 Route::get('/konser/{id}', function ($id) {
  return 'Detail konser nomor ' . $id;
 })->whereNumber('id')->name('konser.detail');
 
-Route::get('/tentang', function () {
- return 'Halaman Tentang TiketWar';
-})->name('tentang');
-
-Route::get('/info', function () {
- return redirect()->route('tentang');
-});
-
-// BARU: route /konser, letakkan di paling bawah
-Route::get('/konser', function () use ($daftarKonser) {
- return view('konser', compact('daftarKonser'));
-})->name('konser.index');
+Route::view('/tentang', 'about')->name('tentang');
