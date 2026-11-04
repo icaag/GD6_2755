@@ -14,6 +14,7 @@ daftar</a>
             @else
                 <button class="btn btn-secondary" disabled>Sold Out</button>
             @endif
+            <p class="text-muted mb-1">Tanggal: {{ date('d-m-Y', strtotime($konser['tanggal'])) }}</p>
         </div>
     </div>
 @endsection
