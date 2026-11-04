@@ -12,6 +12,9 @@ $daftarKonser = [
 120],
 ];
 
+// SESUDAH (sementara, untuk uji @empty):
+//$daftarKonser = [];
+
 Route::get('/', function () {
     return view('welcome');
 });
