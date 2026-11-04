@@ -9,6 +9,18 @@ daftar</a>
             <p class="text-muted mb-1">Kota: {{ $konser['kota'] }}</p>
             <p class="mb-1">Harga: Rp{{ number_format($konser['harga'], 0, ',', '.') }}</p>
             <p>Sisa tiket: {{ $konser['sisa'] }}</p>
+            @if ($konser['sisa'] == 0)
+                @include('partials.alert', [
+                    'tipe' => 'danger',
+                    'pesan' => 'Maaf, Tiket Konser Ini Sudah Habis.'
+                ])
+            @elseif ($konser['sisa'] < 10)
+                @include('partials.alert', [
+                    'tipe' => 'warning',
+                    'pesan' => 'Tiket Konser Ini Hampir Habis!'
+                ])
+            @endif
+
             @if ($konser['sisa'] > 0)
                 <button class="btn btn-primary">War Tiket Sekarang</button>
             @else
