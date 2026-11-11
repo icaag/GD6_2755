@@ -14,7 +14,7 @@
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('tentang') ? 'active' : '' }}" href="{{ route('tentang') }}">Tentang</a>
             </li>
-            <li class="nav-item"><a class="nav-link {{ request()->routeIs('kontak') ? 'active' : '' }}" href="{{ route('kontak') }}">Kontak</a></li>
+           
         </ul>
     </div>
 </nav>
