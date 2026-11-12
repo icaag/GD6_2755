@@ -28,3 +28,10 @@ Route::get('/konser/{konser}/pesan', [PesananController::class, 'create'])
     ->whereNumber('konser')->name('pesanan.create');
 Route::post('/konser/{konser}/pesan', [PesananController::class, 'store'])
  ->whereNumber('konser')->name('pesanan.store');
+
+Route::get('/pesanan.index', [PesananController::class, 'index']) // BARU
+ ->name('pesanan.index'); // BARU
+Route::patch('/pesanan/{pesanan}/bayar', [PesananController::class, 'bayar']) // BARU
+ ->whereNumber('pesanan')->name('pesanan.bayar'); // BARU
+Route::patch('/pesanan/{pesanan}/batal', [PesananController::class, 'batal']) // BARU
+ ->whereNumber('pesanan')->name('pesanan.batal'); // BARU
