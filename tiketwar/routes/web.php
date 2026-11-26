@@ -2,6 +2,7 @@
 use App\Http\Controllers\KonserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PesananController; // BARU
+use App\Http\Controllers\LaporanController;
 
 Route::get('/', function () {
     return view('home');
@@ -35,3 +36,7 @@ Route::patch('/pesanan/{pesanan}/bayar', [PesananController::class, 'bayar']) //
  ->whereNumber('pesanan')->name('pesanan.bayar'); // BARU
 Route::patch('/pesanan/{pesanan}/batal', [PesananController::class, 'batal']) // BARU
  ->whereNumber('pesanan')->name('pesanan.batal'); // BARU
+
+ // Transaksi dan Laporan: laporan // BARU
+Route::get('/laporan', [LaporanController::class, 'index']) // BARU
+ ->name('laporan.index'); // BARU
