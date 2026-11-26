@@ -45,5 +45,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(PesananSeeder::class); // BARU
+        $this->call(AdminSeeder::class);
     }
 }
