@@ -21,7 +21,7 @@
 
     <div class="col-md-3 mb-3">
         <div class="card text-center"><div class="card-body">
-        <div class="display-6">{{ $perStatus->____('menunggu_bayar', 0) }}</div>
+        <div class="display-6">{{ $perStatus->get('menunggu_bayar', 0) }}</div>
         <div class="text-muted">Menunggu Bayar</div>
         </div></div>
     </div>
