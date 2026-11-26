@@ -3,6 +3,7 @@ use App\Http\Controllers\KonserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PesananController; // BARU
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
     return view('home');
@@ -43,3 +44,11 @@ Route::get('/laporan', [LaporanController::class, 'index']) // BARU
 
 Route::get('/laporan/pdf', [LaporanController::class, 'pdf']) // BARU
     ->name('laporan.pdf'); // BARU
+
+// Login dan logout admin // BARU
+Route::get('/login', [AuthController::class, 'showLogin']) // BARU
+ ->middleware('guest')->name('login'); // BARU
+Route::post('/login', [AuthController::class, 'login']) // BARU
+ ->middleware('guest')->name('login.proses'); // BARU
+Route::post('/logout', [AuthController::class, 'logout']) // BARU
+ ->middleware('auth')->name('logout'); // BARU

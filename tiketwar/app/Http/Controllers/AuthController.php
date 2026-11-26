@@ -1,0 +1,40 @@
+<?php
+namespace App\Http\Controllers;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
+
+class AuthController extends Controller
+{
+    public function showLogin(): View
+    {
+        return view('login');
+    }
+
+    public function login(Request $request): RedirectResponse
+    {
+        $credentials = $request->validate([
+        'email' => ['required', 'email'],
+        'password' => ['required'],
+        ]);
+        if (! Auth::attempt($credentials)) {
+            // Pesan sengaja sama untuk email salah maupun kata sandi salah.
+            return back()
+            ->withErrors(['email' => 'Email atau kata sandi salah.'])
+            ->onlyInput('email');
+        }
+
+        // Session baru setelah login berhasil (mencegah session fixation).
+        $request->session()->regenerate();
+        return redirect()->route('pesanan.index');
+    }
+    
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::logout();
+        $request->session()->regenerate();
+        $request->session()->invalidate();
+        return redirect()->route('home');
+    }
+}
