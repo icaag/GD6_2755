@@ -15,6 +15,11 @@
         @if (session('success')) {{-- BARU --}}
              <div class="alert alert-success">{{ session('success') }}</div>{{-- BARU --}}
         @endif {{-- BARU --}}
+
+        @if (session('error')) {{-- BARU --}}
+        <div class="alert alert-danger">{{ session('error') }}</div> {{-- BARU --}}
+        @endif {{-- BARU --}}
+
         @yield('content')
     </main>
 

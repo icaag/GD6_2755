@@ -10,6 +10,12 @@ use Illuminate\View\View;
 
 class PesananController extends Controller
 {
+    public function index(): View // BARU
+    { // BARU
+        $daftarPesanan = Pesanan::with('konser')->latest()->get(); // BARU
+            return view('pesanan', compact('daftarPesanan')); // BARU
+    } // BARU
+
     public function create(Konser $konser): View
     {
         return view('pesanan-create', compact('konser'));
@@ -50,4 +56,47 @@ class PesananController extends Controller
          return redirect()->route('pesanan.index')
         ->with('success', 'Pesanan berhasil dibuat. Status: menunggu bayar.');
     }
+
+    public function bayar(Pesanan $pesanan): RedirectResponse // BARU
+    { // BARU
+        $berhasil = DB::transaction(function () use ($pesanan) { // BARU
+            $terkunci = Pesanan::lockForUpdate()->findOrFail($pesanan->id);
+            if ($terkunci->status !== Pesanan::MENUNGGU_BAYAR) {
+                return false;
+            }
+            
+            $terkunci->update(['status' => Pesanan::LUNAS]);
+            return true;
+        });
+
+        if (! $berhasil) {
+            return redirect()->route('pesanan.index')
+                ->with('error', 'Hanya pesanan menunggu bayar yang bisa dibayar.');
+        }
+
+            return redirect()->route('pesanan.index')
+            ->with('success', 'Pesanan ditandai lunas.');
+        }
+
+        public function batal(Pesanan $pesanan): RedirectResponse
+        {
+            $berhasil = DB::transaction(function () use ($pesanan) {
+            $terkunci = Pesanan::lockForUpdate()->findOrFail($pesanan->id);
+            if ($terkunci->status !== Pesanan::MENUNGGU_BAYAR) {
+                return false;
+            }
+            // Stok dikembalikan dan status diubah dalam satu transaksi.
+            Konser::lockForUpdate()->findOrFail($terkunci->konser_id)
+            ->increment('sisa', $terkunci->jumlah);
+            $terkunci->update(['status' => Pesanan::BATAL]);
+            return true;
+            });
+
+            if (! $berhasil) {
+                return redirect()->route('pesanan.index')
+                ->with('error', 'Hanya pesanan menunggu bayar yang bisa dibatalkan.');
+            }
+            return redirect()->route('pesanan.index')
+                ->with('success', 'Pesanan dibatalkan dan stok dikembalikan.');
+        }
 }
