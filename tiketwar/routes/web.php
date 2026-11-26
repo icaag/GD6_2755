@@ -40,3 +40,6 @@ Route::patch('/pesanan/{pesanan}/batal', [PesananController::class, 'batal']) //
  // Transaksi dan Laporan: laporan // BARU
 Route::get('/laporan', [LaporanController::class, 'index']) // BARU
  ->name('laporan.index'); // BARU
+
+Route::get('/laporan/pdf', [LaporanController::class, 'pdf']) // BARU
+    ->name('laporan.pdf'); // BARU
